@@ -52,3 +52,4 @@ yabai -m rule --add app='IntelliJ IDEA CE' title='Project Structure' manage=off
 yabai -m rule --add app='IntelliJ IDEA CE' title='Preferences' manage=off
 yabai -m rule --add app='IntelliJ IDEA CE' title='Edit configuration' manage=off
 
+borders active_color=0xffffffff inactive_color=0xff101314 width=5.0 &
