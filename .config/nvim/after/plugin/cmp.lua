@@ -1,6 +1,6 @@
 local cmp = require('cmp')
-local lsp = require('lsp-zero')
 
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
   formatting = {
     -- changing the order of fields so the icon is the first
@@ -24,19 +24,18 @@ cmp.setup({
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
+  sources = {
+    {name = 'nvim_lsp'},
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ['<Up>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<Down>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-Enter>'] = cmp.mapping.complete(),
+    ['<Tab>'] = nil,
+    ['<S-Tab>'] = nil,
+  }),
 })
 
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Tab>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})

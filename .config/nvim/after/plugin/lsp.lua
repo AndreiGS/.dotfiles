@@ -1,13 +1,20 @@
 require("neodev").setup({})
 
 local lsp = require("lsp-zero")
+local nvim_lsp = require("lspconfig")
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
-  'tsserver',
-  'rust_analyzer',
-  'lua_ls',
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  -- Replace the language servers listed here
+  -- with the ones you want to install
+  ensure_installed = {'tsserver', 'rust_analyzer', 'kotlin_language_server'},
+  handlers = {
+    function(server_name)
+      nvim_lsp[server_name].setup({})
+    end,
+  },
 })
 
 local on_attach = function(client, bufnr)
@@ -48,7 +55,7 @@ lsp.configure('lua_ls', {
       workspace = {
         checkThirdParty = false,
       }
-    }
+    },
   }
 })
 
@@ -57,6 +64,27 @@ vim.diagnostic.config({
 })
 
 lsp.setup()
+
+--- Typescript lsp config ---
+nvim_lsp["tsserver"].setup {
+  on_attach = on_attach,
+  autostart = true,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+}
+
+--- Kotlin lsp config ---
+nvim_lsp["kotlin_language_server"].setup({
+  on_attach = on_attach,
+  -- cmd = { "/Users/andreighiurtu/DevTools/kotlin-language-server/server/build/install/server/bin/kotlin-language-server" }
+})
 
 --- Flutter Tools lsp config ---
 local dart_lsp = lsp.build_options('dartls', {})
