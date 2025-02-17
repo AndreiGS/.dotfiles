@@ -1,10 +1,10 @@
 local dap = require'dap'
 
-vim.keymap.set("n", "db", function() dap.toggle_breakpoint() end)
-vim.keymap.set("n", "dc", function() dap.continue() end)
-vim.keymap.set("n", "d<Rigth>", function() dap.step_over() end)
-vim.keymap.set("n", "d<Down>", function() dap.step_into() end)
-vim.keymap.set("n", "d<Up>", function() dap.step_out() end)
+vim.keymap.set("n", "db", function() dap.toggle_breakpoint() end, { desc = "DAP: Toggle Breakpoint" })
+vim.keymap.set("n", "dc", function() dap.continue() end, { desc = "DAP: Start/Continue Debugging" })
+vim.keymap.set("n", "d<Right>", function() dap.step_over() end, { desc = "DAP: Step Over" })
+vim.keymap.set("n", "d<Down>", function() dap.step_into() end, { desc = "DAP: Step Into" })
+vim.keymap.set("n", "d<Up>", function() dap.step_out() end, { desc = "DAP: Step Out" })
 
 dap.adapters.lldb = {
   type = 'executable',

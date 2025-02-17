@@ -162,6 +162,20 @@ local plugins = {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+    lazy = true,
+  }
   -- {
   --   "yetone/avante.nvim",
   --   event = "VeryLazy",
