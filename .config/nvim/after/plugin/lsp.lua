@@ -1,20 +1,12 @@
 require("neodev").setup({})
 
 local lsp = require("lsp-zero")
-local nvim_lsp = require("lspconfig")
-
 lsp.preset("recommended")
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  -- Replace the language servers listed here
-  -- with the ones you want to install
-  ensure_installed = {'tsserver', 'rust_analyzer', 'kotlin_language_server'},
-  handlers = {
-    function(server_name)
-      nvim_lsp[server_name].setup({})
-    end,
-  },
+  automatic_enable = true,
+  ensure_installed = {'ts_ls', 'lua_ls', 'rust_analyzer', 'kotlin_language_server'},
 })
 
 local on_attach = function(client, bufnr)
@@ -33,6 +25,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format({ async = false, timeout_ms = 10000 }) end, vim.tbl_extend("force", opts, { desc = "Format Code" }))
 end
 
+vim.diagnostic.config({
+  virtual_text = true
+})
+
+lsp.on_attach(on_attach)
+
 lsp.set_preferences({
   suggest_lsp_servers = false,
   sign_icons = {
@@ -42,8 +40,6 @@ lsp.set_preferences({
     info = 'I'
   }
 })
-
-lsp.on_attach(on_attach)
 
 -- Fix Undefined global 'vim'
 lsp.configure('lua_ls', {
@@ -59,14 +55,8 @@ lsp.configure('lua_ls', {
   }
 })
 
-vim.diagnostic.config({
-  virtual_text = true
-})
-
-lsp.setup()
-
 --- Typescript lsp config ---
-nvim_lsp["tsserver"].setup {
+lsp.configure("ts_ls", {
   on_attach = on_attach,
   autostart = true,
   filetypes = {
@@ -78,10 +68,10 @@ nvim_lsp["tsserver"].setup {
     "typescript.tsx",
   },
   root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-}
+})
 
 --- Kotlin lsp config ---
-nvim_lsp["kotlin_language_server"].setup({
+lsp.configure("kotlin_language_server", {
   on_attach = on_attach,
   -- cmd = { "/Users/andreighiurtu/DevTools/kotlin-language-server/server/build/install/server/bin/kotlin-language-server" }
 })
@@ -164,3 +154,5 @@ require("flutter-tools").setup {
     }
   }
 }
+
+lsp.setup()

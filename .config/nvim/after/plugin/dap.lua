@@ -8,7 +8,7 @@ vim.keymap.set("n", "d<Up>", function() dap.step_out() end, { desc = "DAP: Step 
 
 dap.adapters.lldb = {
   type = 'executable',
-  command = 'lldb-vscode', -- adjust as needed, must be absolute path
+  command = '/opt/homebrew/opt/llvm/bin/lldb-dap', -- adjust as needed, must be absolute path
   name = 'lldb'
 }
 

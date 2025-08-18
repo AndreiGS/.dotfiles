@@ -81,5 +81,5 @@ ctrl + alt - r : /opt/homebrew/bin/yabai --restart-service
 # open terminal
 alt - return : /usr/bin/open -n /Applications/kitty.app
 
-# open Brave
-alt - b : /usr/bin/open -n /Applications/Brave\ Browser.app\
+# open Browser
+alt - b : /usr/bin/open -n /Applications/Zen.app

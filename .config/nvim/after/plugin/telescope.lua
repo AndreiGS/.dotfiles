@@ -11,7 +11,6 @@ telescope.setup {
 }
 
 local builtin = require('telescope.builtin')
-local telescope = require('telescope')
 
 vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Telescope: Find Files" })
 vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = "Telescope: Find Git Files" })
