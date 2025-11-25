@@ -37,3 +37,12 @@ source <(ng completion script)
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# ruby
+
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
+# Added by Antigravity
+export PATH="/Users/andreighiurtu/.antigravity/antigravity/bin:$PATH"
