@@ -1,14 +1,32 @@
-eval "$(starship init zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+
+# Autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Syntax highlighting
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="TERM=xterm-256color ssh"
 
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+eval "$(starship init zsh)"
+
+# Aliases
+alias ll='ls -lahG'
+alias gs='git status'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias vi=nvim
 
 if [[ `uname` == Darwin ]]; then
     MAX_MEMORY_UNITS=KB
@@ -24,13 +42,13 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
 
-# ruby
+# Window Manager & Status Bar
+wm-enable() {
+    brew services start sketchybar
+    open -a Aerospace
+}
 
-if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  export PATH=`gem environment gemdir`/bin:$PATH
-fi
-# Added by Antigravity
-export PATH="/Users/andreighiurtu/.antigravity/antigravity/bin:$PATH"
-
-. "$HOME/.local/bin/env"
+wm-disable() {
+    brew services stop sketchybar
+    pkill Aerospace
+}
