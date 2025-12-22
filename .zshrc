@@ -44,11 +44,38 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 
 # Window Manager & Status Bar
 wm-enable() {
+    echo "Enabling window manager & sketchybar..."
+
+    # Hide menu bar
+    defaults write NSGlobalDomain _HIHideMenuBar -bool true
+    killall SystemUIServer
+
+    # Start SketchyBar
     brew services start sketchybar
-    open -a Aerospace
+
+    # Start AeroSpace (Login Item–managed)
+    open -a AeroSpace
 }
 
 wm-disable() {
+    echo "Disabling window manager & sketchybar..."
+
+    # Quit AeroSpace cleanly
+    osascript -e 'tell application "AeroSpace" to quit'
+
+    # Stop SketchyBar
     brew services stop sketchybar
-    pkill Aerospace
+
+    # Show menu bar
+    defaults write NSGlobalDomain _HIHideMenuBar -bool false
+    killall SystemUIServer
 }
+
+wm-toggle() {
+    if launchctl list | grep -q aerospace; then
+        wm-disable
+    else
+        wm-enable
+    fi
+}
+
