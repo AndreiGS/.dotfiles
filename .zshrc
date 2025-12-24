@@ -26,7 +26,8 @@ alias gs='git status'
 alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
-alias vi=nvim
+alias vi='NVIM_APPNAME=nvims/LazyVim nvim'
+alias cvi='NVIM_APPNAME=nvims/custom nvim'
 
 if [[ `uname` == Darwin ]]; then
     MAX_MEMORY_UNITS=KB
@@ -79,3 +80,4 @@ wm-toggle() {
     fi
 }
 
+. "$HOME/.cargo/env"
