@@ -22,7 +22,6 @@ eval "$(starship init zsh)"
 
 # Aliases
 alias ll='ls -lahG'
-alias gs='git status'
 alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
